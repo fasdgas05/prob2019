@@ -37,6 +37,7 @@ int main() {
 			g[to].push_back(f);
 		}
 
+		//dijkstra alogrithm with no weight
 		result[start] = 0;
 		queue<int> pq;
 		pq.push(start);
