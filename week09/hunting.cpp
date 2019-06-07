@@ -5,7 +5,7 @@ using namespace std;
 long long t, n, k;
 int height[1001] = {};
 int d[1001][1001] = {};
-bool flag = true;
+
 void dfs(int num) {
 	cout << num << "\n";
 	while (true) {
@@ -49,7 +49,7 @@ int main() {
 			d[x][y] = 1;
 			d[y][x] = 1;
 		}
-		while (flag) {
+		while (true) {
 			dfs(min_idx);
 			min_h = 1000000001;
 			min_idx = -1;

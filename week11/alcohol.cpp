@@ -1,63 +1,53 @@
 #include <iostream>
-#include <cstring>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
+
+float remain;
+int inner_bound, next_bound, nxt, cnt;
 
 int main() {
 	ios_base::sync_with_stdio(false);
 	int t, b, l, n;
 	cin >> t;
-	int map[401][401] = {};
-
 	while (t--) {
-		cin >> b >> l >> n;
-		b *= 7;
-		int tmp = 1;
-		for (int i = 1; i <= l-1; i++) {
-			b -= (i*(i + 1) / 2);
-			tmp *= 3;
-		}
-		if (b <= 0) {
-			cout << "0\n";
-			continue;
-		}
-		
+		cin >> b >> l >> n;				
+		vector<float> upper, lower;
 
-
-		memset(map, 0, sizeof(map));
-			for (int i = 1; i <= l; i++) {
-				for (int j = 1; j <= i; j++) {
-					if (i != l && j != i&&j < i&&j>1) {
-						map[i][j] += 3*b;
-					}
-					else if (i == 1 && j == 1 || i == l&&j == 1
-						|| i == l&&j == l) {
-						map[i][j] += 1*b;
-					}
-					else {
-						map[i][j] += 2*b;
-					}
+		upper.push_back(b * 7);
+		for (int i = 1; i <= l; i++) {
+			lower.clear();
+			lower.resize((i+1)* (i + 2) / 2,0.0f);
+			inner_bound = i * (i + 1) / 2;
+			next_bound = inner_bound + i + 1;
+			nxt = 1, cnt = 0;
+			for (int k = 0; k < upper.size(); k++) {
+				if (upper[k] > 1.0f) {
+					remain = (upper[k] - 1.0f) / 3.0f;
+					if (k <= next_bound)
+						lower[k] += remain;
+					if (k + nxt <= next_bound)
+						lower[k + nxt] += remain;
+					if (k + nxt + 1 <= next_bound)
+						lower[k + nxt + 1] += remain;
+				}
+				cnt++;
+				if (nxt == cnt) {
+					nxt++;
+					cnt = 0;
 				}
 			}
-		
-		int res;
-		int x=1, y=1;
-		for (int i = 1; i <= n; i++) {
-			if (x == y) {
-				x++; y = 1;
-			}
-			else {
-				y++;
-			}
+			if (i != l)
+				swap(upper, lower);
+			
 		}
-		res = map[x][y];
-		if (res == 0)
-			cout << "0\n";
-		else if (res >= tmp)
-			cout << "1\n";
+		if (upper[n-1]>=1.0f)
+			cout << 1 << "\n";
+		else if (upper[n-1] == 0.0f)
+			cout << 0 << "\n";
 		else
-			cout << "2\n";
-
+			cout << 2 << "\n";
 	}
 
 	return 0;
