@@ -12,13 +12,13 @@ int main() {
 	int t, b, l, n;
 	cin >> t;
 	while (t--) {
-		cin >> b >> l >> n;				
+		cin >> b >> l >> n;
 		vector<float> upper, lower;
 
 		upper.push_back(b * 7);
 		for (int i = 1; i <= l; i++) {
 			lower.clear();
-			lower.resize((i+1)* (i + 2) / 2,0.0f);
+			lower.resize((i + 1) * (i + 2) / 2, 0.0f);
 			inner_bound = i * (i + 1) / 2;
 			next_bound = inner_bound + i + 1;
 			nxt = 1, cnt = 0;
@@ -40,11 +40,11 @@ int main() {
 			}
 			if (i != l)
 				swap(upper, lower);
-			
+
 		}
-		if (upper[n-1]>=1.0f)
+		if (upper[n - 1] >= 1.0f)
 			cout << 1 << "\n";
-		else if (upper[n-1] == 0.0f)
+		else if (upper[n - 1] == 0.0f)
 			cout << 0 << "\n";
 		else
 			cout << 2 << "\n";
